@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style_theme_1.css' %}">
+<link rel="stylesheet" href="{% static 'css/filterdate.css' %}">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatables/dt-global_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatables/buttons.dataTables.min.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/filterdate.js' %}"></script>
+<!-- BEGIN PAGE LEVEL CUSTOM SCRIPTS -->
+<script src="{% static 'js/datatables/datatables.js' %}"></script>
+<!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
+<script src="{% static 'js/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'js/datatables/jszip.min.js' %}"></script>    
+<script src="{% static 'js/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'js/datatables/buttons.print.min.js' %}"></script>
+<script src="{% static 'js/datatables/buttons.flash.min.js' %}"></script>
+<script src="{% static 'js/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'js/datatables/vfs_fonts.js' %}"></script>
+<script src="{% static 'js/tableexport.js' %}"></script>
+<!--   <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script> -->
+<script src="{% static 'js/filterdate.js' %}"></script>
+
+<script>
+  $(document).ready(function() {
+      App.init();
+  });
+</script>
+
+<script type="text/javascript">
+$('#html5-extension').DataTable( {
+  autoWidth: false,
+  columns : [
+  null,
+    // { width : '100px' },
+    null,
+    null,
+    null,
+    null,        
+    null,
+    null ],       
+
+  dom: 'lBfrtip', 
+
+  buttons: {
+      buttons: [{
+      extend: 'excel',
+      title: 'tekWall Expenses Reoprt',
+      filename: 'Expenses_{{table.first.Date}}to{{table.last.Date}}',
+      className: 'btn-sm',
+      exportOptions: {
+      columns: [0, 1, 2, 3, 4, 5],
+      rows : {search:'applied'}},
+      messageTop: 'Report Duration - From: {{table.first.Date}} To: {{table.last.Date}},   Total Expenses: ₹ {{expset.tExpenses}}'},
+    {
+      extend: 'pdf',
+      title: 'tekWall Expenses Reoprt',
+      filename: 'Expenses_{{table.first.Date}}to{{table.last.Date}}',
+      exportOptions: {
+      columns: [0, 1, 2, 3, 4, 5],
+      rows : {search:'applied'}}, 
+      customize: function ( doc ) {
+      doc.defaultStyle.fontSize = 9;
+      doc.defaultStyle.alignment = 'left';
+      doc.styles.tableHeader = {
+      fillColor:'#525659',
+      color:'#FFF',
+      fontSize: '9',
+      alignment: 'left',
+      bold: true,  }},        
+      className: 'btn-sm',
+      messageTop: 'Report Duration - From: {{table.first.Date}} To: {{table.last.Date}},   Total Expenses: ₹ {{expset.tExpenses}}',
+      filename: 'Expenses_{{table.first.Date}}to{{table.last.Date}}',
+    },
+    {
+      extend: 'print',
+      title: 'tekWall Expenses Reoprt',
+      filename: 'Expenses_{{table.first.Date}}to{{table.last.Date}}',
+      className: 'btn-sm',
+      messageTop: 'Report Duration - From: {{table.first.Date}} To: {{table.last.Date}},   Total Expenses: ₹ {{expset.tExpenses}}',
+      filename: 'Expenses_{{table.first.Date}}to{{table.last.Date}}',},]
+    },
+
+  "oLanguage": {
+    "sInfo": "Showing page _PAGE_ of _PAGES_",
+    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+    "sSearchPlaceholder": "Search/Filter...",
+    "sLengthMenu": "Show Entries _MENU_ ",},
+
+  "stripeClasses": [],
+  "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  "pageLength": 10 ,
+  //       "columns": [
+  //   { "width": "20%" },
+  //   null,
+  //   null,
+  //   null,
+  //   null
+  // ]
+  } );
+</script>
+{% endblock %}
+
+{% block content %} 
+  <div class="page-header">
+    <h3 class="page-title"> Expenses Summary </h3>
+    <nav aria-label="breadcrumb">
+      <ol class="template-demo">
+        <button type="button" id="myBtn" class="btn btn-sm btn-gradient-info btn-icon-text"> Apply Filters <i class="mdi mdi-filter btn-icon-append"></i></button>
+        <button type="button" class="btn btn-sm btn-gradient-success btn-icon-text">Clear Filters<i class="mdi mdi-filter-remove btn-icon-prepend"></i></button>
+      </ol>
+    </nav>
+  </div>
+
+  <div id="addEventsModal" class="modal animated fadeIn">
+    <div class="modal-dialog modal-dialog-centered">                            
+      <!-- Modal content -->
+      <div class="card modal-content">
+          <div class="modal-body">
+              <span id="discard" data-dismiss="modal" class="close">&times;</span>
+              <div class="add-edit-event-box">
+                  <div class="add-edit-event-content">
+                      <div class="add-event-title edit-event-title"></div>
+                      <h5 class="modal-title">Search Expenses by Applying Filter</h5>
+                      <form class="">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <label style="font-weight: 200; color: black; font-size: 13px;">Company Name</label>
+                                  {{ filter_data.form.CompanyName }}
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group start-date">
+                                      <label style="margin-top: 20px; font-weight: 200; color: black; font-size: 13px;">From</label>
+                                      <input type="date" name="from_date" class="form-control">
+                                      <!-- {{ filter_data.form.from_date }} -->
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group start-date">
+                                      <label style="margin-top: 20px; font-weight: 200; color: black; font-size: 13px;">To</label>
+                                      <input type="date" name="to_date" class="form-control">
+                                      <!-- {{ filter_data.form.to_date }} -->
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group">
+                                      <label style="font-weight: 200; color: black; font-size: 13px;">Expenses Category</label>
+                                      {{ filter_data.form.Category }}
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="modal-footer" style="float:left; margin-top: 20px; margin-left: -15px; "> 
+                          <button type="submit"  id="add-e" class="btn">Apply Filters</button>
+                          <!-- <button id="add-e" class="btn">Add Task</button> -->
+                          <button id="edit-event" class="btn"></button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>                                
+
+
+  <div class="row">
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Expenses</div>
+            <div class="h6 mb-0 font-weight-bold text-gray-800">₹ {{expset.tExpenses}}</div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Transportation</div>
+            <div class="h6 mb-0 font-weight-bold text-gray-800">₹ {{expset.tTransp}}</div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">General Purchase</div>
+            <div class="row no-gutters align-items-center">
+              <div class="col-auto">
+                <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">₹ {{expset.tGenExpns}}</div>
+              </div>
+              <div class="col">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending Requests Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Other Expenses</div>
+            <div class="h6 mb-0 font-weight-bold text-gray-800">₹ {{expset.tOthers}}</div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body2">
+        <h4 class="card-title" style="margin-left: 20px;">Expenses Details</h4>
+        <div class="table-responsive m-t-40">
+        <table class="table table-bordered table-striped wrap" cellspacing="0" style="width: 100%"  id="html5-extension">
+
+          <thead style="color: white; background:  #02BAD6; font-weight: 10 ;">
+            <tr>
+              <th>SNo</th>
+              <th>DateOfExpense</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Against</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for x in table %}
+            <tr>
+              <td style="width:10px;"> {{forloop.counter}}</td>
+              <td style="width:100px;"> {{x.Date}} </td>
+              <td> {{x.Category}} </td>
+              <td> {{x.Amount|floatformat:'0'}} </td>
+              <td style="white-space:normal;" > {{x.Description}} </td>
+              <td>{{x.CompanyName.Nick_Name}}</td>
+              <td>
+                <a class="mdi mdi-border-color" href="{% url 'expnsupdate' x.id %}"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                {% if x.Attach %}
+                <a class="mdi mdi-attachment" href="{{x.Attach.url}}" target="_blank"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                {% endif %}                
+                <a class="mdi mdi-delete" href="#" target="_blank"></a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style_theme_1.css' %}">
+<link rel="stylesheet" href="{% static 'css/filterdate.css' %}">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatables/dt-global_style01.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/filterdate.js' %}"></script>
+<!-- BEGIN PAGE LEVEL CUSTOM SCRIPTS -->
+<script src="{% static 'js/datatables/datatables.js' %}"></script>
+<!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
+<script src="{% static 'js/datatables/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'js/datatables/jszip.min.js' %}"></script>    
+<script src="{% static 'js/datatables/buttons.html5.min.js' %}"></script>
+<script src="{% static 'js/datatables/buttons.print.min.js' %}"></script>
+<script src="{% static 'js/datatables/buttons.flash.min.js' %}"></script>
+<script src="{% static 'js/datatables/pdfmake.min.js' %}"></script>
+<script src="{% static 'js/datatables/vfs_fonts.js' %}"></script>
+<!--   <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script> -->
+<script src="{% static 'js/filterdate.js' %}"></script>
+
+<script>
+  $(document).ready(function() {
+      App.init();
+  });
+</script>
+<script>
+       
+  $('#html5-extension').DataTable( 
+  {
+      dom: "<'row'<'col-sm-6'l>>"+'<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
+      buttons: {
+          buttons: [
+      {
+          extend: 'excel',
+          title: 'Meera and Ceiko, RWS-Rajasthan - Detailed Data Report',
+          className: 'btn-sm',
+          messageTop: 'Village: {{sitedtls.Village}},   Panchayat: {{sitedtls.Panchayat}},   District: {{sitedtls.District}},   Report Duration: {{sDate}} to {{eDate}},   Total Energy: {{tEnergy|floatformat:'2'}} MWH,   Water Output: {{tLpd}} Cubic Liters,    Total Pump Run Hours: {{tHrs|floatformat:'1'}} Hours,   Total Faults and Alerts: {{faults}}'
+      },
+
+        {
+          extend: 'pdf',
+          title: 'Meera and Ceiko, RWS-Rajasthan - Detailed Data Report',
+          className: 'btn-sm',
+          messageTop: 'Village: {{sitedtls.Village}},   Panchayat: {{sitedtls.Panchayat}},   District: {{sitedtls.District}},   Report Duration: {{sDate}} to {{eDate}},   Total Energy: {{tEnergy|floatformat:'2'}} MWH,   Water Output: {{tLpd}} Cubic Liters,   Total Pump Run Hours: {{tHrs|floatformat:'1'}} Hours,   Total Faults and Alerts: {{faults}}'
+      },
+
+
+      {
+          extend: 'print',
+          title: 'Meera and Ceiko, RWS-Rajasthan - Detailed Data Report',
+          className: 'btn-sm',
+          messageTop: '<h6>Village: {{sitedtls.Village}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Panchayat: {{sitedtls.Panchayat}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;District: {{sitedtls.District}}</h6><h6>Report Duration: {{sDate}} to {{eDate}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Energy: {{tEnergy|floatformat:'2'}} MWH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Water Output: {{tLpd}} Cubic Liters</h6><h6> Total Pump Run Hours: {{tHrs|floatformat:'1'}} Hours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Faults and Alerts: {{faults}}</h6>'
+      },
+
+      // 'colvis'
+
+    
+  ]
+      },
+      "oLanguage": {
+          "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+          "sInfo": "Showing page _PAGE_ of _PAGES_",
+          "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+          "sSearchPlaceholder": "Search...",
+         "sLengthMenu": "Show Entries  _MENU_",
+      },
+      "stripeClasses": [],
+      "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+      "pageLength": 10 
+  } );
+</script>
+{% endblock %}
+
+{% block content %}   
+<div class="page-header">
+    <h3 class="page-title"> Orders Summary </h3>
+    <nav aria-label="breadcrumb">
+      <ol class="template-demo">
+        <button type="button" id="myBtn" class="btn btn-sm btn-gradient-info btn-icon-text"> Apply Filters <i class="mdi mdi-filter btn-icon-append"></i></button>
+        <button type="button" class="btn btn-sm btn-gradient-success btn-icon-text">Clear Filters<i class="mdi mdi-filter-remove btn-icon-prepend"></i></button>
+      </ol>
+    </nav>
+  </div>
+
+  <div id="addEventsModal" class="modal animated fadeIn">
+    <div class="modal-dialog modal-dialog-centered">                            
+      <!-- Modal content -->
+      <div class="card modal-content">
+          <div class="modal-body">
+              <span id="discard" data-dismiss="modal" class="close">&times;</span>
+              <div class="add-edit-event-box">
+                  <div class="add-edit-event-content">
+                      <div class="add-event-title edit-event-title"></div>
+                      <h5 class="modal-title">Search Data by Applying Filter</h5>
+                      <form class="">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <label style="font-weight: 200; color: black; font-size: 13px;">Company Name</label>
+                                  {{ filter_data.form.Company_Name }}
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group start-date">
+                                      <label style="margin-top: 20px; font-weight: 200; color: black; font-size: 13px;">From</label>
+                                      <input type="date" name="from_date" class="form-control">
+                                      <!-- {{ filter_data.form.from_date }} -->
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group start-date">
+                                      <label style="margin-top: 20px; font-weight: 200; color: black; font-size: 13px;">To</label>
+                                      <input type="date" name="to_date" class="form-control">
+                                      <!-- {{ filter_data.form.to_date }} -->
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group">
+                                      <label style="font-weight: 200; color: black; font-size: 13px;">Confirmed</label>
+                                      <input type="text" name="Is_Confirmed" class="form-control">
+                                      <!-- {{ filter_data.form.Is_Confirmed }} --> 
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-12">
+                                  <div class="form-group">
+                                      <label style="font-weight: 200; color: black; font-size: 13px;">Completed</label>
+                                      <input type="text" name="Is_Completed" class="form-control">
+                                      <!-- {{ filter_data.form.to_date }} -->
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer" style="float:left;">
+                          <button type="submit"  id="add-e" class="btn">Apply Filters</button>
+                          <!-- <button id="add-e" class="btn">Add Task</button> -->
+                          <button id="edit-event" class="btn"></button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>                                
+
+<div class="row">
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Orders Value</div>
+            <div class="h6 mb-0 font-weight-bold text-gray-800">₹ {{ordset.tOrders}}</div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Completed Orders Value</div>
+            <div class="h6 mb-0 font-weight-bold text-gray-800">₹ {{ordset.tOrdComp}}</div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Inprogress Orders Value</div>
+            <div class="row no-gutters align-items-center">
+              <div class="col-auto">
+                <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">₹ {{ordset.tOrdProg}}</div>
+              </div>
+              <div class="col">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending Requests Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body2">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pipeline Orders Value</div>
+            <div class="h6 mb-0 font-weight-bold text-gray-800">₹ {{ordset.tOrdPipe}}</div>
+          </div>
+          <div class="col-auto">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body2">
+          <h4 class="card-title" style="margin-left: 20px;">Order Details</h4>
+          <div class="table-responsive">
+          <table class="table table-bordered table-striped" id="html5-extension">
+            <thead style="color: white; background:  #02BAD6; font-weight: 10 ;">
+              <tr>
+                <th> Customer Name </th>
+                <th> Order Date </th>
+                <th> Order Description </th>
+                <th> Order Value </th>
+                <th> Reference </th>
+                <th> Ref. Name </th>
+                <th> Is Confirmed </th>
+                <th> Order Status </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in table %}
+              <tr>
+                <td> {{x.Company_Name.Nick_Name}} </td>
+                <td> {{x.Order_Date}} </td>
+                <td> {{x.Order_Details}} </td>
+                <td> {{x.Order_Value}} </td>
+                <td> {{x.Order_Through}} </td>
+                <td> {{x.Order_RefName}} </td>
+                {% if x.Is_Confirmed == True %}
+                <td> Confirmed </td>
+                {% else %}
+                <td> Pipeline </td>
+                {% endif %}
+                {% if x.Is_Completed == True %}
+                <td> Completed </td>
+                {% elif x.Is_Confirmed == False %}
+                <td> Pending </td>
+                {% else %}
+                <td> In Progress </td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

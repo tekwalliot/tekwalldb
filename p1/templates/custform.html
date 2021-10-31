@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/custom-modal.css' %}">
+
+<!-- {% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+      </div>
+  {% endfor %}
+{% endif %} -->
+                            
+
+{% if messages %}
+  {% for msg in messages %}
+    <div id="modalCustom" class="col-lg-12 layout-spacing">
+      <div class="statbox widget box box-shadow">
+        <div id="myButton" data-toggle="modal" data-target="#profileModal"></div>
+              <!-- Modal -->
+              <div class="modal fade profile-modal" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <div class="modal-header justify-content-center" id="profileModalLabel">
+                      <div class="modal-profile mt-4">
+                          <img alt="avatar" src="{% static 'img/psb.jpg' %}" class="rounded-circle">
+                      </div>
+                    </div>
+                    <div class="modal-body text-center">
+                          <p class="mt-2">Hi, Suresh Babu</p>
+                          <p class="mt-2">You Have Submitted Data Successfully</p>
+                    </div>
+                    <div class="modal-footer justify-content-center mb-4">
+                      <a type="button" href="{% url 'home' %}" class="btn btn-light">View</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  {% endfor %}
+{% endif %}
+
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Company Registration Form</h4>
+          <form class="forms-sample" action="{% url 'cdform' %}" method="POST">
+            <div class="form-group mb-4">
+              {% csrf_token %}              
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="{{ field.label }}">{{ field.label }}</label>{{ field}}
+<!--                     <input type="text" for="{{ field.label }}" class="form-control" id="exampleInputUsername1" placeholder="{{field.help_text}}">{{ field}} -->
+                </div>
+<!-- <label for="{{ field.label }}" style="color:blue;display:inline-block;vertical-align:middle;">{{ field.label_tag }} {{field.help_text}}</label>{ field }} -->
+              {% endfor %}
+            </div>                   
+          <button type="submit"  class="btn btn-primary">Submit</button> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.onload = function () {
+    document.getElementById('myButton').click()
+}
+</script>
+
+{% endblock %}

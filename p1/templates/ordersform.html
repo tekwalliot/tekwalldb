@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<link rel="stylesheet" href="{% static 'css/custom-modal.css' %}">
+
+{% if messages %}
+  {% for msg in messages %}
+    <div id="modalCustom" class="col-lg-12 layout-spacing">
+      <div class="statbox widget box box-shadow">
+        <div id="myButton" data-toggle="modal" data-target="#profileModal"></div>
+              <!-- Modal -->
+              <div class="modal fade profile-modal" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <div class="modal-header justify-content-center" id="profileModalLabel">
+                      <div class="modal-profile mt-4">
+                          <img alt="avatar" src="{% static 'img/psb.jpg' %}" class="rounded-circle">
+                      </div>
+                    </div>
+                    <div class="modal-body text-center">
+                          <p class="mt-2">Hi, Suresh Babu</p>
+                          <p class="mt-2">You Have Submitted Data Successfully</p>
+                    </div>
+                    <div class="modal-footer justify-content-center mb-4">
+                      <a type="button" href="{% url 'home' %}" class="btn btn-light">View</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  {% endfor %}
+{% endif %} 
+
+<div class="row">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Received Orders Form</h4>
+          <form class="forms-sample" action="{% url 'ordform' %}" method="POST">
+            <div class="form-group mb-4">
+              {% csrf_token %}              
+              {% for field in form %}
+              {% if field.label != 'Is Confirmed' and field.label != 'Is Completed' and  field.label != 'Order Date' %}
+                <div class="form-group">
+                  <label for="{{ field.label }}">{{ field.label }}</label>{{ field}}
+                </div>
+              {% endif %}
+              {% endfor %}
+              <div class="form-group start-date">
+                  <label style="margin-top: 20px; font-weight: 200; color: black; font-size: 13px;">Date</label>
+                  <input type="date" name="Order_Date" class="form-control">
+                  <!-- {{ filter_data.form.from_date }} -->
+              </div>
+              <div class="form-check form-check-flat form-check-primary">
+                <label class="form-check-label">{{ form.Is_Completed }}tick if order is completed</label>
+              </div>
+              <div class="form-check form-check-flat form-check-primary">
+                <label class="form-check-label">{{ form.Is_Confirmed }}tick if order is confirmed</label>
+              </div>              
+            </div>                   
+          <button type="submit"  class="btn btn-primary">Submit</button> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.onload = function () {
+    document.getElementById('myButton').click()
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-warning"  role="alert">
+      {{ msg }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+  {% endfor %}
+{% endif %} 
+
+<div class="row">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Received Orders Form</h4>
+          <form class="forms-sample" action="{% url 'payform' %}" method="POST">
+            <div class="form-group mb-4">
+              {% csrf_token %}              
+              {% for field in form %}
+              {% if field.label != 'Is Cleared' %}
+                <div class="form-group">
+                  <label for="{{ field.label }}">{{ field.label }}</label>{{ field}}
+                </div>
+              {% endif %}
+              {% endfor %}
+              <div class="form-check form-check-flat form-check-primary">
+                <label class="form-check-label">{{ form.Is_Cleared }}tick if paid fully</label>
+              </div>              
+            </div>                   
+          <button type="submit"  class="btn btn-primary">Submit</button> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,262 @@
+            <div class="row" id="proBanner">
+              <div class="col-12">
+                <span class="d-flex align-items-center purchase-popup">
+                  <p style="color: #BA55D3;">Welcome to Nal-Jal Project, Khagaria, Gujarath, See All Your Progress Below..</p>
+                  <a href="{% url 'allproj' %}" class="btn download-button purchase-button ml-auto">Go to All Projects Dash Board</a>
+                  <i class="mdi mdi-close" id="bannerClose"></i>
+                </span>
+              </div>
+            </div>
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Dashboard
+              </h3>
+              <!-- <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                  </li>
+                </ul>
+              </nav> -->
+            </div>
+            
+            <div class="row">
+              <div class="col-md-7 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="clearfix">
+                      <h4 class="card-title float-left">Project Progress-Panchayati Wise (Total-5)</h4>
+                      <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                    </div>
+                    <canvas id="visit-sale-chart" class="mt-4"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Project Progress-Sites Wise (Total-90)</h4>
+                    <canvas id="traffic-chart"></canvas>
+                    <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Task Status and Deadlines - Contractors Wise</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Contractor Name </th>
+                            <th> Task </th>
+                            <th> Status </th>
+                            <th> Daedline </th>
+                            <th> Last Update </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <img src="{% static 'assets/images/faces/face1.jpg' %}" class="mr-2" alt="image"> ContractorName-1
+                            </td>
+                            <td> Pipe Lines </td>
+                            <td>
+                              <label class="badge badge-gradient-success">DONE</label>
+                            </td>
+                            <td> Dec 5, 2020 </td>
+                            <td> Nov 5, 2020 </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img src="{% static 'assets/images/faces/face2.jpg' %}" class="mr-2" alt="image"> ContractorName-2
+                            </td>
+                            <td> Electrical Works </td>
+                            <td>
+                              <div class="progress">
+                                <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </td>
+                            <!-- <td>
+                              <label class="badge badge-gradient-warning">PROGRESS</label>
+                            </td> -->
+                            <td> Dec 5, 2020 </td>
+                            <td> Nov 5, 2020 </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img src="{% static 'assets/images/faces/face3.jpg' %}" class="mr-2" alt="image"> ContractorName-3
+                            </td>
+                            <td> Bore Wells </td>
+                            <td>
+                              <div class="progress">
+                                <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </td>
+                            <!-- <td>
+                              <label class="badge badge-gradient-info">ON HOLD</label>
+                            </td> -->
+                            <td> Dec 5, 2020 </td>
+                            <td> Nov 5, 2020 </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img src="{% static 'assets/images/faces/face4.jpg' %}" class="mr-2" alt="image"> ContractorName-4
+                            </td>
+                            <td> WTP </td>
+                            <td>
+                              <div class="progress">
+                                <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </td>
+                            <!-- <td>
+                              <label class="badge badge-gradient-danger">REJECTED</label>
+                            </td> -->
+                            <td> Dec 5, 2020 </td>
+                            <td> Nov 5, 2020 </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Project - Ward Wise Report</h4>
+                    <h6>Last Update: 09-11-2020</h6>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Panchayat Name </th>
+                            <th> Ward </th>
+                            <th> NOC </th>
+                            <th> Bore Well </th>
+                            <th> Compressor </th>
+                            <th> Foundation </th>
+                            <th> Structure </th>
+                            <th> G.I Room </th>
+                            <th> Pumpset </th>
+                            <th> Tank </th>
+                            <th> Elec Mtr </th>
+                            <th> Elec Conn </th>
+                            <th> Stabilizer </th>
+                            <th> WTP </th>
+                            <th> Pipe Line </th>
+                            <th> HSC </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                          <tr>
+                            <td>Rahimpur Middle</td>
+                            <td> 1 </td>
+                            <td> <label class="badge badge-gradient-success">Yes</label> </td> 
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-primary">In progress</label> </td>
+                            <td> <label class="badge badge-gradient-primary">In Progress</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                          </tr>
+
+                          <tr>
+                            <td>Rahimpur Middle</td>
+                            <td> 2 </td>
+                            <td> <label class="badge badge-gradient-success">Yes</label> </td> 
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                          </tr>
+
+                          <tr>
+                            <td>Rahimpur Middle</td>
+                            <td> 4 </td>
+                            <td> <label class="badge badge-gradient-success">Yes</label> </td> 
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                          </tr>
+
+                          <tr>
+                            <td>Rahimpur Middle</td>
+                            <td> 6 </td>
+                            <td> <label class="badge badge-gradient-success">Yes</label> </td> 
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                            <td> <label class="badge badge-gradient-success">Done</label> </td>
+                          </tr>
+
+                          <tr>
+                            <td>Rahimpur Middle</td>
+                            <td> 9 </td>
+                            <td> <label class="badge badge-gradient-success">Yes</label> </td> 
+                            <td> <label class="badge badge-gradient-dark">Fail</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                            <td> <label class="badge badge-gradient-warning">***</label> </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>

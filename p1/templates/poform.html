@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Received Orders Form</h4>
+          <form class="forms-sample" action="{% url 'poform' %}" method="POST">
+            <div class="form-group mb-4">
+              {% csrf_token %}              
+              {% for field in form %}
+              {% if field.label != 'Is With Tax' %}
+                <div class="form-group">
+                  <label for="{{ field.label }}">{{ field.label }}</label>{{ field}}
+                </div>
+              {% endif %}
+              {% endfor %}
+
+              <div class="form-check form-check-flat form-check-primary">
+                <label class="form-check-label">{{ form.Is_With_Tax }}Tick if Tax Included</label>
+              </div>                         
+            </div>
+          <button type="submit"  class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

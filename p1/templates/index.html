@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script> 
+<script src="{% static 'js/chart.js' %}"></script>
+<script src="{% static 'chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'chart.js/apexcharts.min.js' %}"></script>
+<script src="{% static 'chart.js/dashboardCharts100.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div ng-app = "myApp" ng-controller = "MainCtrl" class="containerCus">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white mr-2">
+        <i class="mdi mdi-home"></i>
+      </span> Dashboard
+    </h3>
+  </div> 
+
+  <div class="row">
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+      <div class="card-body1">
+        <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal">Total Orders Value<i class="mdi mdi-chart-line mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">₹ {{homelist.tOrders}}</h2>
+        <h6 class="card-text">Recent Month Order Value ₹ {{homelist.tOrdersRec}}</h6>
+      </div> 
+    </div>
+  </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-success card-img-holder text-white">
+      <div class="card-body1">
+        <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Total Received Payment<i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">₹ {{homelist.tPaid}}</h2>
+        <h6 class="card-text">Recent Month Paymnets ₹ {{homelist.tPaidRec}}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+      <div class="card-body1">
+        <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+        <h4 class="font-weight-normal mb-3">Pending Payments <i class="mdi mdi-diamond mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">₹ {{homelist.pPay}}</h2>
+        <h6 class="card-text">Pipeline Orders ₹ {{homelist.pOrders}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12 col-lg-7">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h7 class="m-1 font-weight-bold ">Customer Wise Payments Status</h7>
+      </div>
+      <div class="card-body1">
+          <div id="chart5"></div>   
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 grid-margin stretch-card">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h7 class="m-1 font-weight-bold ">Work Progress</h7>
+        <div class="btn-group1">
+        <button class="button1">Button</button>
+        <button class="button1 " style="background: red">Button</button>
+      </div>
+    </div>
+    <div class="card-body1">
+          <div id="s-col-stacked"></div>   
+    </div>
+  </div>
+</div>
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h7 class="m-1 font-weight-bold ">Work Progress</h7>
+    </div>
+    <div class="card-body1">
+          <div id="donut"></div>
+      <!-- div id="traffic-chart-legend1" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>    -->
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

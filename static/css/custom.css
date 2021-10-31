@@ -1,0 +1,21 @@
+.btn-group1 .button1 {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 13px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  float: right;
+}
+
+.btn-group1 .button1:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+.btn-group1 .button1:hover {
+  background-color: #3e8e41;
+}
+
